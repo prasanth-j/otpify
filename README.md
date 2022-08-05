@@ -7,8 +7,6 @@
 ---
 Otpify is a Laravel package that provides a simple and elegant way to generate and validate one time passwords.
 
----
-
 ## Installation
 
 You can install the package via composer:
@@ -21,6 +19,7 @@ You can publish and run the migrations with:
 
 ```bash
 php artisan vendor:publish --tag="otpify-migrations"
+
 php artisan migrate
 ```
 
@@ -34,27 +33,36 @@ This is the contents of the published config file:
 
 ```php
 return [
-		/**
-		 * The length of token.
-		 */
-		'digits'    => env('OTPIFY_DIGITS', 6),
+    /**
+     * The length of token.
+     */
+    'digits'    => env('OTPIFY_DIGITS', 6),
 
-		/**
-		 * The expiry time of token in minutes.
-		 */
-		'validity'  => env('OTPIFY_VALIDITY', 15)
+    /**
+     * The expiry time of token in minutes.
+     */
+    'validity'  => env('OTPIFY_VALIDITY', 15)
 ];
 ```
 
 ## Usage
 
-```php
-use PrasanthJ\Otpify\Facades\Otpify;
+1. Generate Otp
 
-Otpify::generate('john@example.com');	\\ Generate otp
+```php
+use PrasanthJ\Otpify\Otpify;
+
+Otpify::generate('john@example.com');
+```
+
+2. Validate Otp
+
+```php
+use PrasanthJ\Otpify\Otpify;
+
+Otpify::validate('john@example.com', '552327');
 ```
 
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-******
