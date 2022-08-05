@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) :Prasanth Jayakumar <prasanthjayakumar36@gmail.com>
+Copyright (c) Prasanth Jayakumar <support@prasanth.digital>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

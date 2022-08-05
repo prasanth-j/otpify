@@ -24,6 +24,14 @@ class OtpifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                CleanOtps::class,
+            ]);
+        }
+
         $this->publishes([
             __DIR__ . '/../config/otpify.php' => config_path('otpify.php')
         ], 'otpify-config');
@@ -31,11 +39,5 @@ class OtpifyServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../database/migrations/' => database_path('migrations')
         ], 'otpify-migrations');
-
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                CleanOtps::class,
-            ]);
-        }
     }
 }

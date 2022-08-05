@@ -6,7 +6,7 @@
         "laravel otp",
         "otp validation"
     ],
-    "type": "project",
+    "homepage": "https://github.com/prasanth-j/otpify",
     "license": "MIT",
     "autoload": {
         "psr-4": {
@@ -26,9 +26,18 @@
     "authors": [
         {
             "name": "Prasanth Jayakumar",
-            "email": "prasanthjayakumar36@gmail.com"
+            "email": "me@prasanth.digital",
+            "role": "Developer"
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "php": "^7.4"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "prefer-stable": true
 }
