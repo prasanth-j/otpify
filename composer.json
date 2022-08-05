@@ -1,6 +1,6 @@
 {
     "name": "prasanth-j/otpify",
-    "description": "Otpify is a Laravel package that provides a simple and elegant way to generate and validate one time password.",
+    "description": "Otpify is a Laravel package that provides a simple and elegant way to generate and validate one time passwords.",
     "keywords": [
         "otpify",
         "laravel otp",
