@@ -1,0 +1,34 @@
+{
+    "name": "prasanth-j/otpify",
+    "description": "Otpify is a Laravel package that provides a simple and elegant way to generate and validate one time password.",
+    "keywords": [
+        "otpify",
+        "laravel otp",
+        "otp validation"
+    ],
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "PrasanthJ\\Otpify\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "PrasanthJ\\Otpify\\OtpifyServiceProvider"
+            ],
+            "aliases": {
+                "Otpify": "PrasanthJ\\Otpify\\Facades\\Otpify"
+            }
+        }
+    },
+    "authors": [
+        {
+            "name": "Prasanth Jayakumar",
+            "email": "prasanthjayakumar36@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
