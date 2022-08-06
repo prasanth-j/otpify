@@ -14,7 +14,7 @@ class OtpifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('Otpify', \PrasanthJ\Otpify\Otpify::class);
     }
 
     /**

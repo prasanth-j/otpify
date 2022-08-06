@@ -16,7 +16,7 @@ class Otpify
      * @param   int|null    $digits
      * @param   int|null    $validity
      *
-     * @return  object
+     * @return array<string,mixed|string>
      */
     public static function generate(string $identifier, int $userId = null, string $otpType = null, int $digits = null, int $validity = null)
     {
@@ -54,7 +54,7 @@ class Otpify
      * @param   string      $token
      * @param   string|null $otpType
      *
-     * @return  object
+     * @return  array<string,string>
      */
     public static function validate(string $identifier, string $token, string $otpType = null)
     {

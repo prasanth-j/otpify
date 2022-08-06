@@ -13,6 +13,6 @@ class Otpify extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return \PrasanthJ\Otpify\Otpify::class;
+        return 'Otpify';
     }
 }
