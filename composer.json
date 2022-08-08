@@ -32,7 +32,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.4.0"
+        "php": ">=7.4.0"
     },
     "config": {
         "optimize-autoloader": true,

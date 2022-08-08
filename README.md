@@ -70,7 +70,6 @@ Otpify::generate(string $identifier, int $userId, string $otpType, int $digits, 
 #### Example
 
 ```php
-<?php
 use PrasanthJ\Otpify\Facades\Otpify;
 
 $otp = Otpify::generate('john@example.com', 2, 'verification', 6, 10);
@@ -101,7 +100,6 @@ Otpify::validate(string $identifier, string $token, string $otpType);
 #### Example
 
 ```php
-<?php
 use PrasanthJ\Otpify\Facades\Otpify;
 
 $otp = Otpify::generate('john@example.com', '535923', 'verification');
@@ -165,8 +163,6 @@ php artisan otpify:clean
 You can also add this artisan command to `app/Console/Kernel.php` to automatically clean on scheduled
 
 ```php
-<?php
-
 protected function schedule(Schedule $schedule)
 {
     $schedule->command('otpify:clean')->daily();
@@ -175,7 +171,7 @@ protected function schedule(Schedule $schedule)
 
 ## Contribution
 
-If you find an issue with this package or you have any suggestion please help out.
+If you find an issue with this package or you have any suggestions please help out.
 
 ## License
 
