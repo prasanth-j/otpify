@@ -2,8 +2,9 @@
 
 namespace PrasanthJ\Otpify;
 
-use PrasanthJ\Otpify\Commands\CleanOtps;
 use Illuminate\Support\ServiceProvider;
+use PrasanthJ\Otpify\Commands\CleanOtps;
+use PrasanthJ\Otpify\Otpify;
 
 class OtpifyServiceProvider extends ServiceProvider
 {
@@ -14,7 +15,7 @@ class OtpifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('Otpify', \PrasanthJ\Otpify\Otpify::class);
+        $this->app->bind('Otpify', Otpify::class);
     }
 
     /**

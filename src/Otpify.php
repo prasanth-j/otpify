@@ -20,15 +20,20 @@ class Otpify
      */
     public static function generate(string $identifier, int $userId = null, string $otpType = null, int $digits = null, int $validity = null)
     {
-        if ($digits === null) $digits = config('otpify.digits');
-        if ($validity === null) $validity = config('otpify.validity');
+        if ($digits === null) {
+            $digits = config('otpify.digits');
+        }
+
+        if ($validity === null) {
+            $validity = config('otpify.validity');
+        }
 
         Otp::where([
             ['identifier', $identifier],
             ['otp_type', $otpType]
         ])->delete();
 
-        if (($digits >= 4) && ($digits <= 8)) {
+        if (($digits >= 4) && ($digits <= 12)) {
             $token = rand(pow(10, $digits - 1), pow(10, $digits) - 1);
 
             Otp::create([
@@ -38,13 +43,13 @@ class Otpify
                 'validity'          => $validity,
                 'otp_type'          => $otpType
             ]);
-        }
 
-        return [
-            'status'    => 'success',
-            'token'     => $token,
-            'message'   => 'OTP genetated successfully'
-        ];
+            return [
+                'status'    => 'success',
+                'token'     => $token,
+                'message'   => 'OTP genetated successfully'
+            ];
+        }
     }
 
     /**
