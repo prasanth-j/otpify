@@ -4,6 +4,4 @@ namespace PrasanthJ\Otpify\Exceptions;
 
 use InvalidArgumentException;
 
-class InvalidOtpTypeException extends InvalidArgumentException
-{
-}
+class InvalidOtpTypeException extends InvalidArgumentException {}

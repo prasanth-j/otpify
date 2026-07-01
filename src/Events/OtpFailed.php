@@ -8,6 +8,5 @@ class OtpFailed
         public readonly string $identifier,
         public readonly string $purpose,
         public readonly string $reason,
-    ) {
-    }
+    ) {}
 }

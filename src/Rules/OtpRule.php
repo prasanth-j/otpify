@@ -12,8 +12,7 @@ class OtpRule implements Rule
     public function __construct(
         protected string $identifier,
         protected string $purpose = 'default',
-    ) {
-    }
+    ) {}
 
     public function passes($attribute, $value): bool
     {

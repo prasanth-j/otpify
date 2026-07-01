@@ -240,6 +240,18 @@ If you have existing data in the old `otps` table, write a one-off migration to 
 `identifier`/`otp_type`/`token`/expiry data into `otpify_tokens`, or simply let outstanding OTPs
 expire naturally and drop the old table.
 
+## Development
+
+```bash
+composer test      # run the Pest test suite
+composer lint       # fix code style with Laravel Pint
+composer lint:test  # check code style without fixing
+composer analyse    # run static analysis with Larastan
+```
+
+Larastan 3.x requires PHP 8.2+ locally to run static analysis, even though the package itself
+supports PHP 8.1+.
+
 ## License
 
 MIT

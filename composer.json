@@ -24,6 +24,8 @@
         "illuminate/cache": "^9.0|^10.0|^11.0|^12.0"
     },
     "require-dev": {
+        "larastan/larastan": "^3.10",
+        "laravel/pint": "^1.29",
         "orchestra/testbench": "^7.0|^8.0|^9.0|^10.0",
         "pestphp/pest": "^2.0|^3.0",
         "pestphp/pest-plugin-laravel": "^2.0|^3.0"
@@ -49,7 +51,10 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/pest"
+        "test": "vendor/bin/pest",
+        "lint": "vendor/bin/pint",
+        "lint:test": "vendor/bin/pint --test",
+        "analyse": "vendor/bin/phpstan analyse"
     },
     "config": {
         "optimize-autoloader": true,

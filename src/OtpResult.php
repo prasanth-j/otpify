@@ -12,8 +12,7 @@ class OtpResult
         public readonly ?Carbon $expiresAt,
         public readonly string $message,
         public readonly string $status,
-    ) {
-    }
+    ) {}
 
     public static function generated(string $token, Carbon $expiresAt, string $message = 'OTP generated successfully.'): self
     {

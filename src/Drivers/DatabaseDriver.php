@@ -35,7 +35,7 @@ class DatabaseDriver implements OtpDriver
             ->where('purpose', $purpose)
             ->first();
 
-        if (!$record) {
+        if (! $record) {
             return 'not_found';
         }
 
@@ -47,7 +47,7 @@ class DatabaseDriver implements OtpDriver
             return 'expired';
         }
 
-        if (!hash_equals($record->token, hash('sha256', $token))) {
+        if (! hash_equals($record->token, hash('sha256', $token))) {
             return 'invalid';
         }
 

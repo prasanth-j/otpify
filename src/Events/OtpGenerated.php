@@ -11,6 +11,5 @@ class OtpGenerated
         public readonly string $purpose,
         public readonly string $token,
         public readonly Carbon $expiresAt,
-    ) {
-    }
+    ) {}
 }

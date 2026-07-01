@@ -75,7 +75,7 @@ return [
 
     'cache' => [
         'prefix' => 'otpify',
-        'store'  => env('OTPIFY_CACHE_STORE', null),
+        'store' => env('OTPIFY_CACHE_STORE', null),
     ],
 
 ];

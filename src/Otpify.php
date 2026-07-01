@@ -30,9 +30,9 @@ class Otpify
             throw new InvalidArgumentException('OTP digits must be between 4 and 8.');
         }
 
-        if (!in_array($type, self::TYPES, true)) {
+        if (! in_array($type, self::TYPES, true)) {
             throw new InvalidOtpTypeException(
-                "Invalid OTP type [{$type}]. Allowed types: " . implode(', ', self::TYPES) . '.'
+                "Invalid OTP type [{$type}]. Allowed types: ".implode(', ', self::TYPES).'.'
             );
         }
 

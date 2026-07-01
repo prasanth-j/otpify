@@ -13,7 +13,7 @@ class OtpifyServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/otpify.php', 'otpify');
+        $this->mergeConfigFrom(__DIR__.'/../config/otpify.php', 'otpify');
 
         $this->app->bind(DatabaseDriver::class);
         $this->app->bind(CacheDriver::class);
@@ -32,12 +32,12 @@ class OtpifyServiceProvider extends ServiceProvider
 
         $this->app->bind(OtpDriver::class, fn ($app) => $app->make('otpify.driver'));
 
-        $this->app->singleton('otpify', fn () => new Otpify());
+        $this->app->singleton('otpify', fn () => new Otpify);
     }
 
     public function boot(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -45,12 +45,12 @@ class OtpifyServiceProvider extends ServiceProvider
             ]);
 
             $this->publishes([
-                __DIR__ . '/../config/otpify.php' => config_path('otpify.php'),
+                __DIR__.'/../config/otpify.php' => config_path('otpify.php'),
             ], 'otpify-config');
 
             $this->publishes([
-                __DIR__ . '/../database/migrations/create_otpify_tokens_table.php' => database_path(
-                    'migrations/' . date('Y_m_d_His') . '_create_otpify_tokens_table.php'
+                __DIR__.'/../database/migrations/create_otpify_tokens_table.php' => database_path(
+                    'migrations/'.date('Y_m_d_His').'_create_otpify_tokens_table.php'
                 ),
             ], 'otpify-migrations');
         }

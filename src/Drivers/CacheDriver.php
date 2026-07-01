@@ -27,7 +27,7 @@ class CacheDriver implements OtpDriver
         $key = $this->key($identifier, $purpose);
         $record = $this->store()->get($key);
 
-        if (!$record) {
+        if (! $record) {
             return 'not_found';
         }
 
@@ -41,7 +41,7 @@ class CacheDriver implements OtpDriver
             return 'expired';
         }
 
-        if (!hash_equals($record['token'], hash('sha256', $token))) {
+        if (! hash_equals($record['token'], hash('sha256', $token))) {
             return 'invalid';
         }
 
@@ -61,11 +61,11 @@ class CacheDriver implements OtpDriver
     {
         $record = $this->store()->get($this->key($identifier, $purpose));
 
-        if (!$record) {
+        if (! $record) {
             return false;
         }
 
-        return $record['used_at'] === null && !Carbon::parse($record['expires_at'])->isPast();
+        return $record['used_at'] === null && ! Carbon::parse($record['expires_at'])->isPast();
     }
 
     protected function store(): Repository
