@@ -3,111 +3,105 @@
 namespace PrasanthJ\Otpify;
 
 use Carbon\Carbon;
-use PrasanthJ\Otpify\Models\Otp;
+use InvalidArgumentException;
+use PrasanthJ\Otpify\Contracts\OtpDriver;
+use PrasanthJ\Otpify\Events\OtpFailed;
+use PrasanthJ\Otpify\Events\OtpGenerated;
+use PrasanthJ\Otpify\Events\OtpValidated;
+use PrasanthJ\Otpify\Exceptions\InvalidOtpTypeException;
 
 class Otpify
 {
-    /**
-     * Generates a new token.
-     *
-     * @param   string      $identifier
-     * @param   int|null    $userId
-     * @param   string|null $otpType
-     * @param   int|null    $digits
-     * @param   int|null    $validity
-     *
-     * @return array<string,mixed|string>
-     */
-    public static function generate(string $identifier, int $userId = null, string $otpType = null, int $digits = null, int $validity = null)
+    protected const TYPES = ['numeric', 'alpha', 'alphanumeric'];
+
+    protected const CHARSETS = [
+        'numeric' => '0123456789',
+        'alpha' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+        'alphanumeric' => '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    ];
+
+    public function generate(string $identifier, string $purpose = 'default', array $options = []): OtpResult
     {
-        if ($digits === null) {
-            $digits = config('otpify.digits');
+        $digits = $options['digits'] ?? config('otpify.digits', 6);
+        $validity = $options['validity'] ?? config('otpify.validity', 10);
+        $type = $options['type'] ?? config('otpify.type', 'numeric');
+
+        if ($digits < 4 || $digits > 8) {
+            throw new InvalidArgumentException('OTP digits must be between 4 and 8.');
         }
 
-        if ($validity === null) {
-            $validity = config('otpify.validity');
+        if (!in_array($type, self::TYPES, true)) {
+            throw new InvalidOtpTypeException(
+                "Invalid OTP type [{$type}]. Allowed types: " . implode(', ', self::TYPES) . '.'
+            );
         }
 
-        Otp::where([
-            ['identifier', $identifier],
-            ['otp_type', $otpType]
-        ])->delete();
+        $token = $this->generateToken($type, $digits);
+        $expiresAt = Carbon::now()->addMinutes($validity);
 
-        if (($digits >= 4) && ($digits <= 12)) {
-            $token = rand(pow(10, $digits - 1), pow(10, $digits) - 1);
+        $this->driver()->generate($identifier, $purpose, $this->hash($token), $expiresAt);
 
-            Otp::create([
-                'user_id'           => $userId,
-                'identifier'        => $identifier,
-                'token'             => $token,
-                'validity'          => $validity,
-                'otp_type'          => $otpType
-            ]);
+        $result = OtpResult::generated($token, $expiresAt);
 
-            return [
-                'status'    => 'success',
-                'token'     => $token,
-                'message'   => 'OTP genetated successfully'
-            ];
-        }
+        event(new OtpGenerated($identifier, $purpose, $token, $expiresAt));
+
+        return $result;
     }
 
-    /**
-     * Validates the generated token.
-     *
-     * @param   string      $identifier
-     * @param   string      $token
-     * @param   string|null $otpType
-     *
-     * @return  array<string,string>
-     */
-    public static function validate(string $identifier, string $token, string $otpType = null)
+    public function validate(string $identifier, string $token, string $purpose = 'default'): OtpResult
     {
-        $otp = Otp::where([
-            ['identifier', $identifier],
-            ['otp_type', $otpType]
-        ])->first();
+        $status = $this->driver()->validate($identifier, $purpose, $token);
 
-        if ($otp == null) {
+        $result = match ($status) {
+            'valid' => OtpResult::valid(),
+            'expired' => OtpResult::expired(),
+            'already_used' => OtpResult::alreadyUsed(),
+            'not_found' => OtpResult::notFound(),
+            default => OtpResult::invalid(),
+        };
 
-            return [
-                'status'    => 'error',
-                'message'   => 'OTP does not exist'
-            ];
+        if ($result->isValid()) {
+            event(new OtpValidated($identifier, $purpose));
         } else {
-            if (($otp->token == $token) && ($otp->verified == false)) {
-                $carbon = new Carbon();
-                $now = $carbon->now();
-                $validity = $otp->created_at->addMinutes($otp->validity);
-
-                if (strtotime($validity) < strtotime($now)) {
-
-                    return [
-                        'status'    => 'error',
-                        'message'   => 'OTP Expired'
-                    ];
-                } else {
-                    $otp->verified = true;
-                    $otp->update();
-
-                    return [
-                        'status'    => 'success',
-                        'message'   => 'OTP is valid'
-                    ];
-                }
-            } elseif (($otp->token == $token) && ($otp->verified == true)) {
-
-                return [
-                    'status'    => 'info',
-                    'message'   => 'OTP already verified'
-                ];
-            } else {
-
-                return [
-                    'status'    => 'warning',
-                    'message'   => 'OTP invalid'
-                ];
-            }
+            event(new OtpFailed($identifier, $purpose, $result->status));
         }
+
+        return $result;
+    }
+
+    public function invalidate(string $identifier, string $purpose = 'default'): bool
+    {
+        return $this->driver()->invalidate($identifier, $purpose);
+    }
+
+    public function resend(string $identifier, string $purpose = 'default', array $options = []): OtpResult
+    {
+        $this->invalidate($identifier, $purpose);
+
+        return $this->generate($identifier, $purpose, $options);
+    }
+
+    protected function generateToken(string $type, int $digits): string
+    {
+        $charset = self::CHARSETS[$type];
+        $max = strlen($charset) - 1;
+
+        $token = '';
+
+        for ($i = 0; $i < $digits; $i++) {
+            $token .= $charset[random_int(0, $max)];
+        }
+
+        return $token;
+    }
+
+    protected function hash(string $token): string
+    {
+        return hash('sha256', $token);
+    }
+
+    protected function driver(): OtpDriver
+    {
+        return app('otpify.driver');
     }
 }

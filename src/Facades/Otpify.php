@@ -3,20 +3,20 @@
 namespace PrasanthJ\Otpify\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use PrasanthJ\Otpify\OtpResult;
 
 /**
- * @method static array generate(string $identifier, int $userId = null, string $otpType = null, int $digits = null, int $validity = null)
- * @method static array validate(string $identifier, string $token, string $otpType = null)
+ * @method static OtpResult generate(string $identifier, string $purpose = 'default', array $options = [])
+ * @method static OtpResult validate(string $identifier, string $token, string $purpose = 'default')
+ * @method static bool invalidate(string $identifier, string $purpose = 'default')
+ * @method static OtpResult resend(string $identifier, string $purpose = 'default', array $options = [])
+ *
+ * @see \PrasanthJ\Otpify\Otpify
  */
 class Otpify extends Facade
 {
-    /**
-     * Get the registered name of the component.
-     *
-     * @return string
-     */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
-        return 'Otpify';
+        return 'otpify';
     }
 }
