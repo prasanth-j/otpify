@@ -1,16 +1,42 @@
 {
     "name": "prasanth-j/otpify",
-    "description": "Otpify is a Laravel package that provides a simple and elegant way to generate and validate one time passwords.",
+    "description": "A secure, flexible OTP package for Laravel. Supports database and cache drivers, multiple purposes, hashed storage, events, and validation rules.",
     "keywords": [
         "otpify",
         "laravel otp",
-        "otp validation"
+        "otp validation",
+        "one time password"
     ],
     "homepage": "https://github.com/prasanth-j/otpify",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Prasanth Jayakumar",
+            "email": "prasanthjayakumar36@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "^9.0|^10.0|^11.0|^12.0|^13.0",
+        "illuminate/console": "^9.0|^10.0|^11.0|^12.0|^13.0",
+        "illuminate/database": "^9.0|^10.0|^11.0|^12.0|^13.0",
+        "illuminate/cache": "^9.0|^10.0|^11.0|^12.0|^13.0"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.10",
+        "laravel/pint": "^1.29",
+        "orchestra/testbench": "^7.0|^8.0|^9.0|^10.0|^11.0",
+        "pestphp/pest": "^2.0|^3.0"
+    },
     "autoload": {
         "psr-4": {
             "PrasanthJ\\Otpify\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
         }
     },
     "extra": {
@@ -23,28 +49,20 @@
             }
         }
     },
-    "authors": [
-        {
-            "name": "Prasanth Jayakumar",
-            "email": "me@prasanth.digital",
-            "role": "Developer"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {
-        "php": "^8.0",
-        "illuminate/console": "^9.0",
-        "illuminate/database": "^9.0",
-        "illuminate/support": "^9.0",
-        "nesbot/carbon": "^2.35"
-    },
-    "require-dev": {
-        "illuminate/config": "^9.0"
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "lint": "vendor/bin/pint",
+        "lint:test": "vendor/bin/pint --test",
+        "analyse": "vendor/bin/phpstan analyse"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
