@@ -9,16 +9,19 @@ validation rule.
 - PHP 8.1+
 - Laravel 9, 10, 11, 12, or 13
 
-Each Laravel major has its own minimum PHP version, so the actual floor depends on which Laravel
-version you're on:
+Each Laravel major has its own PHP range and support window (per Laravel's official support
+policy), so the actual floor depends on which Laravel version you're on:
 
-| Laravel | Minimum PHP |
-|---|---|
-| 9 | 8.1 (Laravel itself allows 8.0.2+, but this package requires 8.1+) |
-| 10 | 8.1 |
-| 11 | 8.2 |
-| 12 | 8.2 |
-| 13 | 8.3 |
+| Laravel | PHP range | Security fixes until |
+|---|---|---|
+| 9 | 8.0 – 8.2 (this package requires 8.1+) | Feb 2024 — EOL |
+| 10 | 8.1 – 8.3 | Feb 2025 — EOL |
+| 11 | 8.2 – 8.4 | Mar 2026 — EOL |
+| 12 | 8.2 – 8.5 | Feb 2027 |
+| 13 | 8.3 – 8.5 | Mar 2028 |
+
+Laravel 9, 10, and 11 no longer receive security fixes upstream. This package still works on them,
+but for new projects prefer Laravel 12 or 13.
 
 ## Installation
 
