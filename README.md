@@ -6,8 +6,19 @@ validation rule.
 
 ## Requirements
 
-- PHP ^8.1
-- Laravel 9, 10, 11 or 12
+- PHP 8.1+
+- Laravel 9, 10, 11, 12, or 13
+
+Each Laravel major has its own minimum PHP version, so the actual floor depends on which Laravel
+version you're on:
+
+| Laravel | Minimum PHP |
+|---|---|
+| 9 | 8.1 (Laravel itself allows 8.0.2+, but this package requires 8.1+) |
+| 10 | 8.1 |
+| 11 | 8.2 |
+| 12 | 8.2 |
+| 13 | 8.3 |
 
 ## Installation
 
@@ -213,7 +224,7 @@ For the `database` driver, expired and used rows accumulate over time. Clean the
 php artisan otpify:clean
 ```
 
-Schedule it in `routes/console.php` (Laravel 11/12) or `app/Console/Kernel.php` (Laravel 9/10):
+Schedule it in `routes/console.php` (Laravel 11+) or `app/Console/Kernel.php` (Laravel 9/10):
 
 ```php
 Schedule::command('otpify:clean')->daily();
