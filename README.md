@@ -1,5 +1,10 @@
 # Otpify
 
+[![Build Status](https://scrutinizer-ci.com/g/prasanth-j/otpify/badges/build.png?b=master)](https://scrutinizer-ci.com/g/prasanth-j/otpify/build-status/master)
+[![Total Downloads](https://img.shields.io/packagist/dt/prasanth-j/otpify.svg)](https://packagist.org/packages/prasanth-j/otpify)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/prasanth-j/otpify)](https://packagist.org/packages/prasanth-j/otpify)
+[![License: MIT](https://img.shields.io/packagist/l/prasanth-j/otpify)](https://opensource.org/licenses/MIT)
+
 A secure, flexible OTP (One-Time Password) package for Laravel. Supports database and cache
 storage drivers, multiple purposes per identifier, hashed token storage, events, and a ready-made
 validation rule.
